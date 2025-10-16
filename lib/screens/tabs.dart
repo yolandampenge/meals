@@ -25,8 +25,6 @@ class _TabsScreen extends State<TabsScreen> {
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void _newfunction(String test) {}
-
   void _toggleMealFavoriteStatus(Meal meal) {
     final existingMeal = _favoriteMeals.contains(meal);
 
