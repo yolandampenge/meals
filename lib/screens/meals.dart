@@ -1,18 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/screens/meal_details.dart';
 import 'package:meals/widgets/meal_item.dart';
 
 class MealsSreen extends StatelessWidget {
-  const MealsSreen({super.key, required this.tittle, required this.meals});
+  const MealsSreen({
+    super.key,
+    this.tittle,
+    required this.meals,
+    required this.onToggleFavorite,
+  });
 
-  final String tittle;
+  final String? tittle;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavorite;
+
+  void selectMeal(BuildContext context, Meal meal) {
+    //Navigator.of(context).pop(); - to manually to the previous page
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) =>
+            MealDetailsScreen(meal: meal, onToggleFavorite: onToggleFavorite),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
       itemCount: meals.length,
-      itemBuilder: (cxt, index) => MealItem(meal: meals[index]),
+      itemBuilder: (cxt, index) => MealItem(
+        meal: meals[index],
+        onSelectMeal: (meal) {
+          selectMeal(context, meal);
+        },
+      ),
     );
 
     if (meals.isEmpty) {
@@ -38,9 +60,13 @@ class MealsSreen extends StatelessWidget {
       );
     }
 
+    if (tittle == null) {
+      return content;
+    }
+
     // if your widget will be return as a screen, Scafold is your friend, otherwise, container
     return Scaffold(
-      appBar: AppBar(title: Text(tittle)),
+      appBar: AppBar(title: Text(tittle!)),
       body: content,
     );
   }
