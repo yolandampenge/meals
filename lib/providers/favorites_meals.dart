@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart'; //show StateNotifier, StateNotifierProvider
 
 import 'package:meals/models/meal.dart';
